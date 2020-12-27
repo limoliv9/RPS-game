@@ -1,0 +1,165 @@
+using System;
+
+namespace rps
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string playerChoice = "";
+            string cpuChoice = "";
+            int playerPoint = 0;
+            int cpuPoint = 0;
+
+            Console.WriteLine("Hello!");
+
+            while (playerPoint < 10 && cpuPoint < 10)
+            {
+
+
+                try
+                {
+                    playerChoice = convert(promptUserInput(), "You");
+                }
+
+                catch(Exception yeet)
+                {
+                    Console.WriteLine(yeet.Message);
+                }
+                 
+                cpuChoice = convert(CpuChoice(), "Computer");
+                string result = determine(playerChoice, cpuChoice);
+
+                if(result == "Win")
+                {
+                    playerPoint++;
+                    result = "";
+                }
+                else if(result == "Lost")
+                {
+                    cpuPoint++;
+                    result = "";
+                }
+                else
+                {
+                    result = "";
+                }
+                Console.WriteLine("Player Points: " + playerPoint);
+                Console.WriteLine("Computer Points: " + cpuPoint);
+                playerChoice = "";
+                cpuChoice = "";
+
+                Console.WriteLine();
+            }
+
+            if(playerPoint == 10)
+            {
+                Console.WriteLine("You Win!");
+            }
+            else if (cpuPoint == 10)
+            {
+                Console.WriteLine("You Lose!");
+            }
+
+
+
+            //exception handling
+
+
+        }
+
+        static int promptUserInput()
+        {
+            int choice;
+
+            Console.WriteLine("Pick one:");
+            Console.WriteLine("Rock: 1");
+            Console.WriteLine("Paper: 2");
+            Console.WriteLine("Scissors: 3");
+
+            choice = Convert.ToInt32(Console.ReadLine());
+
+            Console.Clear();
+            return choice;
+        }
+
+        static string convert(int num, string player)
+        {
+            string choose = "";
+            switch (num)
+            {
+                case 1:
+                    choose = "Rock";
+                    break;
+                case 2:
+                    choose = "Paper";
+                    break;
+                case 3:
+                    choose = "Scissors";
+                    break;
+            }
+            Console.WriteLine(player + " chose " + choose);
+            return choose;
+        }
+
+        static int CpuChoice()
+        {
+
+            int choice;
+            Random num = new Random();
+            choice = num.Next(1, 4);
+            return choice;
+        }
+
+
+        static string determine(string cpuInput, string playerInput)
+        {
+            string outcome = "Tied";
+
+            
+            switch(playerInput)
+            {
+                //player Tie
+                case "Rock" when cpuInput == "Rock":
+                    outcome = "Tied";
+                      break;
+                case "Paper" when cpuInput == "Paper":
+                    outcome = "Tied";
+                    break;
+                case "Scissors" when cpuInput == "Scissors":
+                    outcome = "Tied";
+                    break;
+                //player Loss
+                case "Rock" when cpuInput == "Paper":
+                    outcome = "Lost";
+                    break;
+
+                case "Paper" when cpuInput == "Scissors":
+                    outcome = "Lost";
+                    break;
+
+                case "Scissors" when cpuInput == "Rock":
+                    outcome = "Lost";
+                    break;
+                //player win
+                case "Rock" when cpuInput == "Scissors":
+                    outcome = "Win";
+                    break;
+
+                case "Paper" when cpuInput == "Rock":
+                    outcome = "Win";
+                    break;
+
+                case "Scissors" when cpuInput == "Paper":
+                    outcome = "Win";
+                    break;
+            }
+
+            Console.WriteLine("You " + outcome);
+            return outcome;
+            
+
+
+        }
+    }
+}
